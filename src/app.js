@@ -9,11 +9,11 @@ app.use(cors());
 // Importar rutas
 const userRoutes = require('./routes/user.routes');
 const authRoutes = require('./routes/auth.routes');
-const proyectRoutes = require('./routes/proyect.routes');
+const projectRoutes = require('./routes/project.routes');
 
 // Habilitar esta rutas
 app.use('./api/v1', userRoutes);
 app.use('./api/v1', authRoutes);
-app.use('./api/v1', proyectRoutes);
+app.use('./api/v1', projectRoutes);
 
 module.exports = app;
