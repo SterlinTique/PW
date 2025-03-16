@@ -4,7 +4,7 @@ exports.createUser = async (req, res) => {
     try {
         const { nombre, email, password, rol_id, administrador_id } = req.body;
         const newUser = await userService.createUser(nombre, email, password, rol_id, administrador_id);
-        res.status(281).json({ message: 'Usuario creado con éxito', user: newUser }); // 281 para la creacion de nuevos ususarios
+        res.status(201).json({ message: 'Usuario creado con éxito', user: newUser }); // 281 para la creacion de nuevos ususarios
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -32,7 +32,7 @@ exports.getAllUsersByRolId = async (req, res) => {
 };
 
 
-exports.updateUser = async (rep, res) => {
+exports.updateUser = async (req, res) => {
     const { id } = req.params; // extraer el id de la URL enviado como parametro
     const { nombre, email, rol_id, administrador_id } = req.body;
     const admin_from_token = req.user.id;
@@ -54,5 +54,3 @@ exports.deleteUser = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
-
-// hacer el primer edpoint de proyectos

@@ -1,7 +1,7 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 
-exports.createUser = async (nombre, ElementInternals, password, rol_id, administrador_id) => {
+exports.createUser = async (nombre, email, password, rol_id, administrador_id) => {
     try {
         const userExists = await User.findOne({ where: {email}}); // El findOne es un modelo que se utiliza con sequelize. 
         if (!userExists) {
@@ -20,7 +20,7 @@ exports.createUser = async (nombre, ElementInternals, password, rol_id, administ
 
         return newUser;
     } catch (err) {
-        throw new Error('Error al crear el usuario: ${err.message}');
+        throw new Error(`Error al crear el usuario: ${err.message}`);
     }
 };
 
@@ -33,7 +33,7 @@ exports.getAllUsersByAdministradorId = async (administrador_id, email) => {
         const users = await User.findAll({ where: whereClause, attributes: { exclude: ['password']}});
         return users;
     } catch {err} {
-        throw new Error('Error al obtenernlos usuarios: ${err.message}');
+        throw new Error(`Error al obtenernlos usuarios: ${err.message}`);
     }
 };
 
@@ -43,11 +43,11 @@ exports.getAllUsersByRolId = async (rol_id) => {
         const users = await User.findAll({ where: {rol_id}, attributes: { exclude: ['password']}});// se excluye la contraseña para no compromenter datos sensibles
         return users;
     } catch (err) {
-        throw new Error('Error al obtener  los usuarios: ${err.message}');
+        throw new Error(`Error al obtener  los usuarios: ${err.message}`);
     }
 };
 
-exports.updateUser = async (IdleDeadline, nombre, email, rol_id, administrador_id, admin_from_token) => {
+exports.updateUser = async (id, nombre, email, rol_id, administrador_id, admin_from_token) => {
     try {
         const user = await User.findByPk(id); // va a hacer la busqueda por id || await para que complete la operacion antes de continuar
         if (user.administrador_id !== admin_from_token) {
@@ -73,7 +73,7 @@ exports.updateUser = async (IdleDeadline, nombre, email, rol_id, administrador_i
 
         return user;
     } catch (err) {
-        throw new Error('Error al actualizar el usuario: ${err.message}');
+        throw new Error(`Error al actualizar el usuario: ${err.message}`);
     }
 };
 
@@ -91,6 +91,6 @@ exports.deleteUser = async (id, admin_from_token) => {
         await user.destroy();
         return { message: 'Usuario eliminado con éxito'};
     }catch (err) {
-        throw new Error('Error al eliminar el usuario: ${err.message}');
+        throw new Error(`Error al eliminar el usuario: ${err.message}`);
     }
 };
