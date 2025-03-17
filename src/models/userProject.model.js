@@ -1,12 +1,14 @@
+// Importar funciones de datos de Sequelize y tambien la instancia que se hizo en el database.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
+// Se define el modelo de relación entre usuarios y proyectos
 const UserProject = sequelize.define('usuarios_proyectos', {
-    id: { type: DataTypes.INTEGER, primaryKey: false, autoIncrement: true },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     usuario_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: { model: 'usuario', key: 'id' }
+        references: { model: 'usuarios', key: 'id' }
     },
     proyecto_id: {
         type: DataTypes.INTEGER,
@@ -17,5 +19,5 @@ const UserProject = sequelize.define('usuarios_proyectos', {
     timestamps: false,
     tableName: 'usuarios_proyectos',
 });
-
+// Exportamos el modelo de relación entre usuarios y proyectos
 module.exports = UserProject;

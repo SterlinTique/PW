@@ -1,11 +1,11 @@
 const sequelize = require('./config/database');
 const app = require('./app');
 const dotenv = reqire('dotenv');
-require('./models/associations');
+require('./models/associations');//Importa las asociaciones entre modelos
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;// Establecer el puerto para el proyecto
 
 sequelize.authenticate()
     .then(() => {
