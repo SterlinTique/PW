@@ -10,21 +10,22 @@ Como objetivo del proyecto se tomo como idea proporcionar una plataforma para la
 
 ## Características de proyecto
 
-* Autenticación: Login y registro de usuarios.
-* Gestión para usuarios: CRUD para usuarios.
-* Gestión de proyectos: CRUD para proyectos.
-* Asignación de roles y permisos a los usuarios.
-* Integración con una base de datos PostgreSQL con ayuda de Sequelize.
+- Autenticación de login y registro de usuarios.
+- Gestión para usuarios (**CRUD**).
+- Gestión de proyectos (**CRUD**).
+- Asignación de roles y permisos a los usuarios.
+- Integración con una base de datos **PostgreSQL** con ayuda de Sequelize.
 
 ## Tecnologías y herramientas
 
-- Node.js: Entorno de ejecución para el lado del servidor.
-- Sequelize: ORM (Mapeo Relacional de Objetos) para interactuar con las base de datos.
-- Express: Framework para el manejo de rutas y middlewares.
-- Dotenv: Gestión de variables de entorno.
+- **Node.js:** Entorno de ejecución para el lado del servidor.
+- **Sequelize:** ORM (Mapeo Relacional de Objetos) para interactuar con las base de datos.
+- **Express:** Framework para el manejo de rutas y middlewares.
+- **Dotenv:** Gestión de variables de entorno.
 
 ## Estructura del proyecto
 
+```plaintext
 src/
 ├── config/          
 │   ├── database.js        
@@ -34,8 +35,7 @@ src/
 │   ├── auth.controller.js 
 │   ├── project.controller.js 
 ├── middlewares/     
-│   ├── auth.middleware.js  
-│   ├── error.middleware.js 
+│   ├── auth.middleware.js   
 ├── models/          
 │   ├── associations.js
 │   ├── project.model.js
@@ -52,8 +52,7 @@ src/
 │   ├── user.service.js
 app.js
 service.js
-README.md
-
+```
 
 ## Configuració e instalación
 
