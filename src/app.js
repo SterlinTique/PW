@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors'); //La biblioteca CORS es para poder habilitar el acceso a la API desde diferentes partes
-const app = require();
+const app = express();
 
 // Habilitar estos modulos
 app.use(express,json());

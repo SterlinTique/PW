@@ -67,6 +67,11 @@ Pasos pal npm
 1. ...
 2. ...
 
+## Cómo generar el JWT_SECRET
+1. En al terminal colocar 
+```node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"```
+2. Esto hara que se genere un jwt secret random y este tambien sera inmutable
+
 ## Desarroladores 
 
 ...

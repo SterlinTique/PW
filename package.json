@@ -1,4 +1,16 @@
-{
+{ 
+  "name": "admin-access-project-backend",
+  "version": "1.0.0",
+  "description": "Proyecto de PW",
+  "main": "./src/server.js",
+
+  "scripts": {
+    "dev": "nodemon -e js  ./src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",

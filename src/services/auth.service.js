@@ -8,7 +8,12 @@ const RolePermisssion = require('../models/rolePermission.model');
 dotenv.config();//cargar variables de entorno
 
 const SECRET_KEY = process.env.JWT_SECRET; // Obtener la clave secreta desde las claves de entorno
-// exportamos un servicio que va ha recibir una email y un  passwor
+// exportamos un servicio que va ha recibir una email y un password
+// Opcional - Verificar si la variable JWT_SECRET está definida
+// Para evitar errores si la variable no está definida
+// if (!SECRET_KEY) {
+//     throw new Error('La variable JWT_SECRET no está definida');
+// }
 exports.loginUser = async (email, password) => {
     try{
         // verifica que el ususario existe 
@@ -16,6 +21,12 @@ exports.loginUser = async (email, password) => {
         if (!user) {
             throw new Error('Usuario no encontrada');
         }
+
+        // Opcional - Verificar si el usuario está activo
+        // Para evitar que usuarios inactivos inicien sesión
+        // if (!user.isActive) {
+        //     throw new Error('El usuario no está activo');
+        // }
 
         //Verificar si la contraseña es correcta
         const isPasswordValid = await bcrypt.compare(password, user.password)
@@ -38,6 +49,12 @@ exports.loginUser = async (email, password) => {
             SECRET_KEY,
             { expiresIn: '1h'}
         );
+
+        // Opcional - Verificar si el token se generó correctamente
+        // Para evitar errores si el token no se generó correctamente
+        // if (!token) {
+        //     throw new Error('Error al generar el token');
+        // }
 
         return token;
     } catch (error) {
