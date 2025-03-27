@@ -3,7 +3,7 @@ const cors = require('cors'); //La biblioteca CORS es para poder habilitar el ac
 const app = express();
 
 // Habilitar estos modulos
-app.use(express,json());
+app.use(express.json());
 app.use(cors());
 
 // Importar rutas

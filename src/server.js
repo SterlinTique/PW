@@ -1,6 +1,6 @@
 const sequelize = require('./config/database');
 const app = require('./app');
-const dotenv = reqire('dotenv');
+const dotenv = require('dotenv');
 require('./models/associations');//Importa las asociaciones entre modelos
 
 dotenv.config();

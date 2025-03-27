@@ -4,7 +4,7 @@ const sequelize = require('../config/database');
 
 // Se define el modelo de proyecto
 const Project = sequelize.define('proyectos', {
-    id: { type: DataTypes.INTEGER, primarykey: true, autoIncrement: true },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     nombre: { type: DataTypes.STRING, allowNull: false }, // EL "allowNull" es para indicar si la columna es nula o no, en este caso no puede ser nula
     descripcion: { type: DataTypes.STRING, allowNull: false }, 
     fecha_creacion: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW }, // "defaultValue" se establece automaticamente al momento de crearla
