@@ -7,7 +7,7 @@ exports.createUser = async (nombre, email, password, rol_id, administrador_id) =
     try {
         // verifica que el usuario no exista antes de continuar
         const userExists = await User.findOne({ where: {email}}); // El findOne es un modelo que se utiliza con sequelize. 
-        if (!userExists) {
+        if (userExists) {
             throw new Error('El usuario ya existe');
         }
         // se cifra la contraseña

@@ -28,16 +28,16 @@ exports.loginUser = async (email, password) => {
         //     throw new Error('El usuario no está activo');
         // }
 
-        //Verificar si la contraseña es correcta
-        const isPasswordValid = await bcrypt.compare(password, user.password)
-        if (!isPasswordValid) {
-            throw new Error('Contraseña incorrecta');
-        }
+        //Verificar si la contraseña es correcta 
+const isPasswordValid = await bcrypt.compare(password, user.password)
+if (!isPasswordValid) {
+    throw new Error('Contraseña incorrecta');
+}
 
         // consultar permisos de rol
         const rolePermissions = await RolePermisssion.findAll({
             where: { rol_id: user.rol_id },
-            attributes: ['persimo_id']
+            attributes: ['permiso_id']
         });
         
         // Extraemos los permisos del resultado
@@ -49,6 +49,7 @@ exports.loginUser = async (email, password) => {
             SECRET_KEY,
             { expiresIn: '1h'}
         );
+        console.log(token); // Verifica el valor del token generado
 
         // Opcional - Verificar si el token se generó correctamente
         // Para evitar errores si el token no se generó correctamente

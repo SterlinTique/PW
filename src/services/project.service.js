@@ -1,24 +1,22 @@
-const project = require('../models/project.model');
-const user = require('../models/user.model');
+const Project = require('../models/project.model');
+const User = require('../models/user.model');
 
-exports.createProject = async (nombre, descripcion, administrador_id, admin_from_token ) => {
+// Se exporta el servicio para crear nuevos proyectos
+exports.createProject = async (nombre, descripcion, administrador_id) => {
     try {
-        if (administrador_id !== admin_from_token) {  // se tiene que comprobar primero que sea administrador */
-            throw new Error('Acceso denegado, el proyecto debe ser creado por un administrador');
-        }
-
-        const newProject = await Project.create({
+        const newProject = await Project.create({ // Crea al usuario con los datos dados
             nombre,
             descripcion,
-            administrador_id,
+            administrador_id
         });
 
-        return newProject;
+        return newProject; // Devuelve al usuario creado
     } catch (err) {
         throw new Error(`Error al crear el proyecto: ${err.message}`);
     }
 };
 
+// Se exporta el servicio para obtener todos los proyectos, con un administrador y sus usuarios asociados
 exports.getAllProjects = async () => {
     try {
         const projects = await Project.findAll({
@@ -42,6 +40,7 @@ exports.getAllProjects = async () => {
     }
 };
 
+// Se exporta el servicio para obtener los proyectos por ID
 exports.getProjectById = async (id) => {
     try {
         const project = await Project.findByPk(id);
@@ -54,6 +53,8 @@ exports.getProjectById = async (id) => {
     }
 };
 
+
+// Se exporta el sevicio para asociar usuarios a un proyecto mediante IDs
 exports.assingUsersToProject = async (data) => {
     const project = await Project.findByPk(data.projectId);
     if (!project) throw new Error('Proyecto no encontrado');
@@ -62,7 +63,7 @@ exports.assingUsersToProject = async (data) => {
     if (users.length !== data.userIds.length) throw new Error('Algunos usuarios no fueron encontrados');
 
     await project.addUsuarios(users);
-    return await project.findByPk(data.project, {
+    return await project.reload({
         include: [
             {
                 model: User,
@@ -72,18 +73,24 @@ exports.assingUsersToProject = async (data) => {
             }
         ],
     });
+    return project;
 };
 
+// Se exporta el servicio para desasociar usuarios de un proyecto mediante IDs
 exports.removeUserFromProject = async (data) => {
     const project = await Project.findByPk(data.projectId);
-    if (!project) throw new Error('Usuario no encontrado');
+    if (!project) 
+        throw new Error('Proyecto no encontrado'); // Verifica que el proyecto exista
 
     const user = await User.findByPk(data.userId);
-    if (!user) throw new Error('Usuario no encontrado');
+    if (!user) 
+        throw new Error('Usuario no encontrado'); // Verifica que usuario exista
 
-    await project.removeUsuario(user);
+    await project.removeUsuario(user); // Mediante el "removeUsuario" lo desasocia
 };
 
+
+// Se exporta el servicio para actualizar los datos de un proyecto
 exports.updateProject = async (id, nombre, descripcion, administrador_id) => {
     try {
         const project = await Project.findByPk(id);
@@ -91,18 +98,20 @@ exports.updateProject = async (id, nombre, descripcion, administrador_id) => {
             throw new Error('Proyecto no encontrado');
         }
 
-        await project.update({
+        await project.update({ // Actualiza el proyecto con los nuevo datos dados mediante el update
             nombre,
             descripcion,
             administrador_id,
         });
 
-        return project;
+        return project; // Devuelve el objeto con las modificaciones
     } catch (err) {
         throw new Error(`Error al actualizar el proyecto: ${err.message}`);
     }
 };
 
+
+// Se exporta el servicio para eliminar un proyecto por id
 exports.deleteProject = async (id) => {
     try {
         const project = await Project.findByPk(id);
