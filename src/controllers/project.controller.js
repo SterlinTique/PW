@@ -5,15 +5,14 @@ const projectService = require('../services/project.service');
 exports.createProject = async (req, res) => {
     try {
         const { nombre, descripcion, administrador_id } = req.body;
-        const admin_from_token = req.user.administrador_id;
-        const newProject = await projectService.createProject(nombre, descripcion, administrador_id, admin_from_token);
+        const newProject = await projectService.createProject(nombre, descripcion, administrador_id );
         res.status(201).json({ message: 'Proyecto creado con éxito', newProject});
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
 
-// Controlador para obtener todos los proyectos asociados a un administrador
+// Controlador para obtener todos los proyectos, con un administrador y sus usuarios asociados
 exports.getAllProjects = async (req, res) => {
     try {
         const projects = await projectService.getAllProjects();
@@ -23,6 +22,7 @@ exports.getAllProjects = async (req, res) => {
     }
 };
 
+// Controlador para asociar usuarios a un proyecto
 exports.assingUsersToProject = async (req, res) => {
     try {
         const data = req.body;
@@ -33,6 +33,7 @@ exports.assingUsersToProject = async (req, res) => {
     }
 };
 
+// Desasociar usuarios de un proyecto
 exports.removeUserFromProject = async (req, res) => {
     try {
         const data = req.body;

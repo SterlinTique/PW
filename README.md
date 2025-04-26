@@ -31,11 +31,12 @@ src/
 │   ├── database.js        
 │   ├── dotenv.js          
 ├── controllers/     
-│   ├── user.controller.js 
 │   ├── auth.controller.js 
 │   ├── project.controller.js 
+│   ├── user.controller.js 
 ├── middlewares/     
-│   ├── auth.middleware.js   
+│   ├── auth.middleware.js 
+│   ├── error.middleware.js   
 ├── models/          
 │   ├── associations.js
 │   ├── project.model.js
@@ -50,6 +51,9 @@ src/
 │   ├── auth.service.js
 │   ├── project.service.js
 │   ├── user.service.js
+├── utils/          
+│   ├── constants.js
+.env
 app.js
 service.js
 ```

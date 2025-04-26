@@ -17,6 +17,8 @@ const Project = sequelize.define('proyectos', {
 }, {
     timestamps: false,
     tableName: 'proyectos', // especificar el nombre de la tabla en la base de datos 
+    underscored: true, // Para indicarle a Sequelize que utilice nombres de columnas con guiones bajos
+    
     // Lo siguiente es para organizar la hora referente zona horaria de Colombia 
     hooks: {
         afterCreate: (project, options) => {
