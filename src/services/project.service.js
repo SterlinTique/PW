@@ -1,5 +1,6 @@
 const Project = require('../models/project.model');
 const User = require('../models/user.model');
+const { Op } = require('sequelize'); // Importa el operador "Op" de Sequelize para consultas en el servicio de getProjectBytUserId
 
 // Se exporta el servicio para crear nuevos proyectos
 exports.createProject = async (nombre, descripcion, administrador_id) => {
@@ -10,7 +11,7 @@ exports.createProject = async (nombre, descripcion, administrador_id) => {
             administrador_id
         });
 
-        return newProject; // Devuelve al usuario creado
+        return newProject; // Devuelve al proyecto creado
     } catch (err) {
         throw new Error(`Error al crear el proyecto: ${err.message}`);
     }
@@ -34,6 +35,53 @@ exports.getAllProjects = async () => {
                 }
             ]
         });
+        return projects;
+    } catch (err) {
+        throw new Error(`Error al obtener los proyectos: ${err.message}`);
+    }
+};
+
+// Se exporta el servicio para obtener los proyectos por ID de usuario
+exports.getProjectsByUserId = async (userId) => {
+    try {
+        const projectsAdmin = await Project.findAll({
+            where: {
+                administrador_id: userId // Filtra los proyectos donde el usuario es administrador del proyecto
+            },
+            include: [
+                {
+                    model: User,
+                    as: 'administrador',
+                    attributes: ['id', 'nombre', 'email']
+                },
+                {
+                    model: User,
+                    as: 'usuarios',
+                    attributes: ['id', 'nombre', 'email'],
+                    through: { attributes: [] }
+                }
+            ]
+        });
+
+        const projectsUser = await Project.findAll({
+            include: [
+                {
+                    model: User,
+                    as: 'administrador',
+                    attributes: ['id', 'nombre', 'email']
+                },
+                {
+                    model: User,
+                    as: 'usuarios',
+                    where: { id: userId }, // Filtra los proyectos donde el usuario está asociado
+                    attributes: ['id', 'nombre', 'email'],
+                    through: { attributes: [] }
+                }
+            ]
+        });
+        // Combina los proyectos donde el usuario es administrador y los proyectos donde el usuario esta asociado a dicho proyecto
+        const projects = [...projectsAdmin, ...projectsUser];
+        console.log(projects); // Agrega este console.log para ver qué proyectos se están obteniendo
         return projects;
     } catch (err) {
         throw new Error(`Error al obtener los proyectos: ${err.message}`);

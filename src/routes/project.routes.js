@@ -7,9 +7,10 @@ const { authenticateToken, checkRole } = require('../middlewares/auth.middleware
 // Ruta POST para crear un proyecto
 router.post('/projects/create', authenticateToken, checkRole([ROLES.ADMIN]), projectController.createProject);
 router.put('/projects/update/:id', authenticateToken, checkRole([ROLES.ADMIN]), projectController.updateProject);
-router.get('/projects', authenticateToken, checkRole([ROLES.ADMIN]), projectController.getAllProjects);
+router.get('/projects', authenticateToken, checkRole([ROLES.ADMIN, ROLES.user]), projectController.getAllProjects);
 router.delete('/projects/delete/:id', authenticateToken, checkRole([ROLES.ADMIN]), projectController.deleteProject);
-router.get('/projects/:id', authenticateToken, checkRole([ROLES.ADMIN]), projectController.getProjectById);
+// router.get('/projects/user', authenticateToken, checkRole([ROLES.ADMIN]), projectController.getProjectById);
+router.get('/projects/:id', authenticateToken, checkRole([ROLES.ADMIN, ROLES.user]), projectController.getProjectsByUserId);
 
 router.post('/projects/associate', authenticateToken, checkRole([ROLES.ADMIN]), projectController.assingUsersToProject);
 router.delete('/projects/disassociate', authenticateToken, checkRole([ROLES.ADMIN]), projectController.removeUserFromProject);

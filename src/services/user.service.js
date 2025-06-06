@@ -23,15 +23,19 @@ exports.createUser = async (nombre, email, password, rol_id, administrador_id) =
 
         return newUser;// devuelve el usuario creado
     } catch (err) {
+        console.error(err); // Agrega este console.log para ver el error
         throw new Error(`Error al crear el usuario: ${err.message}`);
     }
 };
 
 // Se exporta el servicio para obtener todos los usuarios de un administrador
-exports.getAllUsersByAdministradorId = async (administrador_id, email) => {
+exports.getAllUsersByAdministradorId = async (administrador_id, name, email) => {
     try {
          // whereClause para filtrar los usuarios
         const whereClause = { administrador_id };
+        if (name) {
+            whereClause.name = name;
+        }
         if (email) {
             whereClause.email = email;
         }

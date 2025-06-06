@@ -44,6 +44,16 @@ exports.removeUserFromProject = async (req, res) => {
     }
 };
 
+exports.getProjectsByUserId = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const projects = await projectService.getProjectsByUserId(userId);
+        res.json(projects);
+    } catch (err) {
+        res.status(500).json({ message: `Error al obtener los proyectos: ${err.message}` });
+    }
+};
+
 // Controlador para obtener un proyecto por el id
 exports.getProjectById = async (req, res) => {
     try {

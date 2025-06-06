@@ -17,8 +17,8 @@ exports.createUser = async (req, res) => {
 exports.getAllUsersByAdministradorId = async (req, res) => {
     try {
         const admin_from_token = req.user.id; // Se extrae el id del administrador del token de autenticación
-        const { email } = req.query; // Se extrae el email de la consulta para utilizarlo como tipo filtro y es opcional
-        const users = await userService.getAllUsersByAdministradorId(admin_from_token, email);
+        const { name, email } = req.query; // Se extrae el email de la consulta para utilizarlo como tipo filtro y es opcional
+        const users = await userService.getAllUsersByAdministradorId(admin_from_token, name, email);
         res.status(200).json({message: 'Usuarios consultados con éxito', users });
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener los usuarios', error });
